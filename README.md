@@ -15,15 +15,19 @@ The **Hello Cloud API** is a simple Python web application built using the FastA
 ```text
 hello-cloud-api/
 │
-├── app/
-│   ├── __init__.py    # Marks the directory as a Python package
-│   └── main.py        # Application entrypoint containing FastAPI routes
+├── .github/
+│   └── workflows/
+│       └── docker-build.yml  # GitHub Actions workflow for Docker Build CI
 │
-├── .dockerignore      # Excludes local dev files from Docker build context
-├── .gitignore         # Prevents virtual environments & cache files from being tracked
-├── Dockerfile         # Docker configuration file for containerizing the app
-├── README.md          # Documentation and setup instructions
-└── requirements.txt   # Pinned application dependencies (FastAPI & Uvicorn)
+├── app/
+│   ├── __init__.py           # Marks the directory as a Python package
+│   └── main.py               # Application entrypoint containing FastAPI routes
+│
+├── .dockerignore             # Excludes local dev files from Docker build context
+├── .gitignore                # Prevents virtual environments & cache files from being tracked
+├── Dockerfile                # Docker configuration file for containerizing the app
+├── README.md                 # Documentation and setup instructions
+└── requirements.txt          # Pinned application dependencies (FastAPI & Uvicorn)
 ```
 
 ---
@@ -194,4 +198,20 @@ To remove the container:
 ```bash
 docker rm hello-cloud-api-container
 ```
+
+---
+
+## Continuous Integration with GitHub Actions (Phase 3)
+
+We have configured a CI workflow that automatically builds the Docker image on code push to the `main` branch to ensure the application builds successfully.
+
+### Workflow Configuration
+The workflow file is located at [docker-build.yml](file:///Users/aayushsupe/Desktop/hello-cloud-api/.github/workflows/docker-build.yml) and performs the following tasks:
+1. **Trigger**: Triggers on every push or pull request to the `main` branch.
+2. **Environment**: Runs on the latest Ubuntu runner (`ubuntu-latest`).
+3. **Steps**:
+   - Checks out the project code.
+   - Sets up Docker Buildx (extended build capabilities).
+   - Builds the Docker image locally (without pushing to a registry) to verify compilation.
+
 
