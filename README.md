@@ -17,7 +17,7 @@ hello-cloud-api/
 │
 ├── .github/
 │   └── workflows/
-│       └── docker-build.yml  # GitHub Actions workflow for Docker Build CI
+│       └── ci.yml            # GitHub Actions workflow for ECR Build & Push CI/CD
 │
 ├── app/
 │   ├── __init__.py           # Marks the directory as a Python package
@@ -218,7 +218,7 @@ To make the push succeed, you must add the following **GitHub Secrets** under yo
 | `ECR_REPOSITORY` | The name of your Amazon ECR Repository |
 
 ### Workflow Configuration
-The workflow file is located at [docker-build.yml](file:///Users/aayushsupe/Desktop/hello-cloud-api/.github/workflows/docker-build.yml) and performs the following tasks:
+The workflow file is located at [ci.yml](file:///Users/aayushsupe/Desktop/hello-cloud-api/.github/workflows/ci.yml) and performs the following tasks:
 1. **Trigger**: Triggers on every push to the `main` branch.
 2. **Environment**: Runs on the latest Ubuntu runner (`ubuntu-latest`).
 3. **Steps**:
