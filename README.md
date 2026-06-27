@@ -201,17 +201,33 @@ docker rm hello-cloud-api-container
 
 ---
 
-## Continuous Integration with GitHub Actions (Phase 3)
+## CI/CD with GitHub Actions & Amazon ECR (Phase 3 & 4)
 
-We have configured a CI workflow that automatically builds the Docker image on code push to the `main` branch to ensure the application builds successfully.
+We have configured a CI/CD workflow that automatically builds the Docker image and pushes it to your Amazon Elastic Container Registry (ECR) on every push to the `main` branch.
+
+### Prerequisites
+
+To make the push succeed, you must add the following **GitHub Secrets** under your repository settings (`Settings > Secrets and variables > Actions`):
+
+| Secret Name | Description |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | Your AWS IAM User access key |
+| `AWS_SECRET_ACCESS_KEY` | Your AWS IAM User secret key |
+| `AWS_REGION` | Your target AWS Region (e.g. `us-east-1`) |
+| `AWS_ACCOUNT_ID` | Your 12-digit AWS Account ID |
+| `ECR_REPOSITORY` | The name of your Amazon ECR Repository |
 
 ### Workflow Configuration
 The workflow file is located at [docker-build.yml](file:///Users/aayushsupe/Desktop/hello-cloud-api/.github/workflows/docker-build.yml) and performs the following tasks:
-1. **Trigger**: Triggers on every push or pull request to the `main` branch.
+1. **Trigger**: Triggers on every push to the `main` branch.
 2. **Environment**: Runs on the latest Ubuntu runner (`ubuntu-latest`).
 3. **Steps**:
    - Checks out the project code.
-   - Sets up Docker Buildx (extended build capabilities).
-   - Builds the Docker image locally (without pushing to a registry) to verify compilation.
+   - Configures AWS credentials using your secrets.
+   - Logs in to your Amazon ECR registry.
+   - Builds the Docker image locally.
+   - Tags the image to target your Amazon ECR registry.
+   - Pushes the image to your ECR repository.
+
 
 
